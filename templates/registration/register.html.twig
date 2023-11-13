@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    <div class="d-flex flex-column align-items-center">
+        <h1>Inscription</h1>
+
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm) }}
+        <div style="width: 400px">
+            <div>
+                {{ form_row(registrationForm.email, {'label':'Email', 'attr': {'class':'form-control'}, 'label_attr': {'class': 'form-label'}}) }}
+            </div>
+            <div class="mt-2">
+                {{ form_row(registrationForm.lastName, {'label':'Nom', 'attr': {'class':'form-control'}, 'label_attr': {'class': 'form-label'}}) }}
+            </div>
+            <div class="mt-2">
+                {{ form_row(registrationForm.firstName, {'label':'Prénom', 'attr': {'class':'form-control'}, 'label_attr': {'class': 'form-label'}}) }}
+            </div>
+            <div class="mt-2">
+                {{ form_row(registrationForm.plainPassword, {'label':'Mot de passe', 'attr': {'class':'form-control'}, 'label_attr': {'class': 'form-label'}}) }}
+            </div>
+            <div class="mt-2">
+                <button type="submit" class="btn btn-primary form-control mt-3">S'inscrire</button>
+            </div>
+            <div class="mt-2">
+                <button type="button" class="btn btn-danger form-control mt-3">
+                    <a href="{{ path('index') }}" class="text-decoration-none text-white">
+                        Annuler
+                    </a>
+                </button>
+            </div>
+        </div>
+
+        {{ form_end(registrationForm) }}
+    </div>
+
+{% endblock %}
