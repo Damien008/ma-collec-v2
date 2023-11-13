@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-center align-items-center flex-column mt-5">
+        <p class="h4">Bienvenue sur Ma Collec</p>
+        <p class="h4">Le site qui vous permet de classer vos films préférés et de pouvoir les rechercher de façon simple est rapide</p>
+        <div class="mt-5">
+            <a href="{{ path('register') }}" class="btn btn-primary">Inscription</a>
+            <a href="{{ path('login') }}" class="btn btn-success">Connexion</a>
+        </div>
+    </div>
+{% endblock %}
