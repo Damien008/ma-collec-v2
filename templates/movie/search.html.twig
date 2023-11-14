@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MovieController!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('movie') }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex flex-column align-items-center">
+        <h1>Ajouter un film</h1>
+        <div class="formWidth mt-3">
+            {{ form_start(searchForm) }}
+                {{ form_row(searchForm.name, {'label':'Nom du film', 'attr': {'class':'form-control'}, 'label_attr': {'class': 'form-label'}}) }}
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary form-control mt-3">Rechercher</button>
+                </div>
+                <div class="mt-2">
+                    <button type="button" class="btn btn-danger form-control mt-3">
+                        <a href="{{ path('index') }}" class="text-decoration-none text-white">
+                            Annuler
+                        </a>
+                    </button>
+                </div>
+            {{ form_end(searchForm) }}
+        </div>
+        {% if moviesData %}
+            <div class="mt-5 row">
+                <p class="h3 text-center" id="movieNb">{{ moviesData['total_results'] }} films trouvés.</p>
+                <div id="cardsMoviesSearch" class="d-flex justify-content-around mx-5">
+                    {% for movie in moviesData['results'] %}
+                        <div class="card col-2 my-2 mx-1 p-2">
+                            <img class="card-img-top " src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ movie.title }}</h5>
+                                <p class="card-title">({{ movie.original_title }})</p>
+                            </div>
+                            <a href="#" class="btn btn-primary mb-3">Ajouter</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if moviesData['total_pages'] > 1 %}
+                <div class="d-flex flex-wrap">
+                    {% set chiffre = moviesData['total_pages'] | default(0) %}
+                    {% for i in 1..chiffre %}
+                        <div data-page="{{ i }}" data-search="{{ searchForm.name.vars.value }}" class="nbPage">
+                            <span class="d-flex justify-content-center align-items-center h-100">
+                                {{ i }}
+                            </span>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+
+
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('movie') }}
+    {% endblock %}
+{% endblock %}

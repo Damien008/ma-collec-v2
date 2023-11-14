@@ -3,6 +3,7 @@
 body {
     background-color: lightgrey;
     font-family: 'Dosis', sans-serif;
+    padding-bottom: 100px;
 }
 
 .title-app{
@@ -12,4 +13,8 @@ body {
     height: 120px;
     color: white;
     font-size: 60px;
+}
+
+.formWidth{
+    width: 400px;
 }
