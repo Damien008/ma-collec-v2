@@ -37,8 +37,7 @@ class MovieController extends AbstractController
         $searchForm->handleRequest($request);
 
         if ($searchForm->isSubmitted() && $searchForm->isValid()){
-            $name = $searchForm['name']->getData();
-            $moviesData = $this->getCallApiService()->getData($name);
+            $moviesData = $this->getCallApiService()->getData($searchForm['name']->getData());
         }
 
         return $this->render('movie/search.html.twig', [
@@ -47,6 +46,7 @@ class MovieController extends AbstractController
         ]);
     }
 
+    //affichage d'une nouvelle page de film via Ajax
     /**
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface

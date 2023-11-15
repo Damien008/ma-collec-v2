@@ -58,4 +58,14 @@ class CallApiService
         return $response->toArray();
     }
 
+    public function getMovieDetail(int $id)
+    {
+        $response = $this->client->request(
+            'GET',
+            'https://api.themoviedb.org/3/movie/' . $id .'?api_key=' . $this->parameterBag->get('API_KEY') . '&language=fr-FR'
+        );
+
+        return $response->toArray();
+    }
+
 }

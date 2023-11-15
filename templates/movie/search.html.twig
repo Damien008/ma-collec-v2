@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MovieController!{% endblock %}
+{% block title %}Recherche un film{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -17,27 +17,26 @@
                 <div class="mt-2">
                     <button type="submit" class="btn btn-primary form-control mt-3">Rechercher</button>
                 </div>
-                <div class="mt-2">
-                    <button type="button" class="btn btn-danger form-control mt-3">
-                        <a href="{{ path('index') }}" class="text-decoration-none text-white">
-                            Annuler
-                        </a>
-                    </button>
-                </div>
             {{ form_end(searchForm) }}
         </div>
         {% if moviesData %}
-            <div class="mt-5 row">
+            <div class="container-fluid mt-5">
                 <p class="h3 text-center" id="movieNb">{{ moviesData['total_results'] }} films trouvés.</p>
-                <div id="cardsMoviesSearch" class="d-flex justify-content-around mx-5">
+                <div id="cardsMoviesSearch" class="row justify-content-center">
                     {% for movie in moviesData['results'] %}
-                        <div class="card col-2 my-2 mx-1 p-2">
-                            <img class="card-img-top " src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ movie.title }}</h5>
-                                <p class="card-title">({{ movie.original_title }})</p>
+                        <div class="col-2 my-3">
+                            <div class="card p-2 h-100">
+                                {% if movie.poster_path %}
+                                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="{{ movie.poster_path }}">
+                                {% else %}
+                                    <img class="card-img-top" src="{{ asset('images/image-non-disponible.jpg') }}" alt="image non disponible">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ movie.title }} <i class="fa fa-xs fa-info-circle text-info" aria-hidden="true" title="{{ movie.overview }}"></i></h5>
+                                    <p>({{ movie.original_title }})</p>
+                                </div>
+                                <a href="#" class="btn btn-primary">Ajouter</a>
                             </div>
-                            <a href="#" class="btn btn-primary mb-3">Ajouter</a>
                         </div>
                     {% endfor %}
                 </div>
