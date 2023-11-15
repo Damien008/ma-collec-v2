@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche un film{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('movie') }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex flex-column align-items-center">
+        <h1>Ajouter un film</h1>
+        <div class="formWidth mt-3">
+            {{ form_start(searchForm) }}
+                {{ form_row(searchForm.name, {'label':'Nom du film', 'attr': {'class':'form-control'}, 'label_attr': {'class': 'form-label'}}) }}
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary form-control mt-3">Rechercher</button>
+                </div>
+            {{ form_end(searchForm) }}
+        </div>
+        {% if moviesData %}
+            <div class="container-fluid mt-5">
+                <p class="h3 text-center" id="movieNb">{{ moviesData['total_results'] }} films trouvés.</p>
+                <div id="cardsMoviesSearch" class="row justify-content-center">
+                    {% for movie in moviesData['results'] %}
+                        <div class="col-2 my-3">
+                            <div class="card p-2 h-100">
+                                {% if movie.poster_path %}
+                                    <img class="card-img-top" src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="{{ movie.poster_path }}">
+                                {% else %}
+                                    <img class="card-img-top" src="{{ asset('images/image-non-disponible.jpg') }}" alt="image non disponible">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ movie.title }} <i class="fa fa-xs fa-info-circle text-info" aria-hidden="true" title="{{ movie.overview }}"></i></h5>
+                                    <p>({{ movie.original_title }})</p>
+                                </div>
+                                <a href="#" class="btn btn-primary">Ajouter</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if moviesData['total_pages'] > 1 %}
+                <div class="d-flex flex-wrap">
+                    {% set chiffre = moviesData['total_pages'] | default(0) %}
+                    {% for i in 1..chiffre %}
+                        <div data-page="{{ i }}" data-search="{{ searchForm.name.vars.value }}" class="nbPage">
+                            <span class="d-flex justify-content-center align-items-center h-100">
+                                {{ i }}
+                            </span>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+
+
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('movie') }}
+    {% endblock %}
+{% endblock %}
