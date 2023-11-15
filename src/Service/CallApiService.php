@@ -11,7 +11,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class CallApiService
 {
-    public function __construct(private readonly HttpClientInterface $client, private ParameterBagInterface $parameterBag){
+    public function __construct(private readonly HttpClientInterface $client, private readonly ParameterBagInterface $parameterBag){
 
     }
 
@@ -30,7 +30,7 @@ class CallApiService
     {
         $response = $this->client->request(
             'GET',
-            'https://api.themoviedb.org/3/search/movie?query=' . $query .'&api_key=' . $this->parameterBag->get('API_KEY') . '&language=fr-FR'
+            'https://api.themoviedb.org/3/search/movie?query=' . $query .'&api_key=' . $this->parameterBag->get('APP_SECRET') . '&language=fr-FR'
         );
 
         return $response->toArray();
@@ -52,7 +52,7 @@ class CallApiService
     {
         $response = $this->client->request(
             'GET',
-            'https://api.themoviedb.org/3/search/movie?query=' . $query .'&api_key=' . $this->parameterBag->get('API_KEY') . '&language=fr-FR&page=' . $page
+            'https://api.themoviedb.org/3/search/movie?query=' . $query .'&api_key=' . $this->parameterBag->get('APP_SECRET') . '&language=fr-FR&page=' . $page
         );
 
         return $response->toArray();
@@ -62,7 +62,7 @@ class CallApiService
     {
         $response = $this->client->request(
             'GET',
-            'https://api.themoviedb.org/3/movie/' . $id .'?api_key=' . $this->parameterBag->get('API_KEY') . '&language=fr-FR'
+            'https://api.themoviedb.org/3/movie/' . $id .'?api_key=' . $this->parameterBag->get('APP_SECRET') . '&language=fr-FR'
         );
 
         return $response->toArray();
