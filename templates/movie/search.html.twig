@@ -35,7 +35,7 @@
                                     <h5 class="card-title">{{ movie.title }} <i class="fa fa-xs fa-info-circle text-info" aria-hidden="true" title="{{ movie.overview }}"></i></h5>
                                     <p>({{ movie.original_title }})</p>
                                 </div>
-                                <a href="#" class="btn btn-primary">Ajouter</a>
+                                <button data-id="{{ movie.id }}" class="addMovie btn btn-primary">Ajouter</button>
                             </div>
                         </div>
                     {% endfor %}
@@ -57,10 +57,9 @@
         {% endif %}
     </div>
 
-
-
-
+    {% include 'movie/modal.html.twig' %}
     {% block javascripts %}
         {{ encore_entry_script_tags('movie') }}
     {% endblock %}
+
 {% endblock %}
