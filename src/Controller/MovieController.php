@@ -60,4 +60,23 @@ class MovieController extends AbstractController
         $result = $this->getCallApiService()->getPageResult($request->get('search'), $request->get('page'));
          return new JsonResponse($result);
     }
+
+    //Ajout d'un film à la collection de l'utilisateur via Ajax
+    #[Route('/ajout-film', name: 'add')]
+    public function addMovie(Request $request): JsonResponse
+    {
+        $user = $this->getUser();
+        $idMovieDB = $request->get('id');
+        $movie = $this->getMovieService()->findOneBy(['idMovieDB' => $idMovieDB]);
+
+        if($movie){
+            $message = $this->getUserMovieService()->create($user, $movie);
+        }else{
+            $newMovie = $this->getCallApiService()->getMovieDetail($idMovieDB);
+            $newMovie = $this->getMovieService()->create($newMovie);
+            $message = $this->getUserMovieService()->create($user, $newMovie);
+        }
+
+        return new JsonResponse($message);
+    }
 }

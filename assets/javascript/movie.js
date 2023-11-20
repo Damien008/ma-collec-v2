@@ -3,7 +3,10 @@ import '../styles/movie.scss';
 // start the Stimulus application
 import '../bootstrap';
 
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
+//Chargement d'une nouvelle page de films lors de la recherche
 $('.nbPage').on('click', function () {
     $.ajax({
         url: '/movie/search_by_page',
@@ -30,8 +33,23 @@ $('.nbPage').on('click', function () {
            });
            $('html, body').animate({
                scrollTop: $('#movieNb').offset().top
-           }, 400)
+           }, 100)
         }
     })
 });
+
+//ajout d'un film à la collection d'un utilisateur
+$('.addMovie').on('click', function () {
+    $.ajax({
+        url: '/movie/ajout-film',
+        type: 'GET',
+        data: {
+            id: $(this).data('id'),
+        },
+        success: function (data) {
+            $('.modal').modal('show');
+            $('.modal-body').html(data);
+        }
+    })
+})
 

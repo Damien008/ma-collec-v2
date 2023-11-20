@@ -35,7 +35,7 @@ class SecurityController extends AbstractController
 
             $this->getUserService()->create($user);
 
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('home_index');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -46,6 +46,9 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        if($this->getUser()){
+            return $this->redirectToRoute('movie_search');
+        }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -36,6 +38,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserMovie::class)]
+    private Collection $userMovies;
+
+    public function __construct()
+    {
+        $this->userMovies = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -139,6 +149,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserMovie>
+     */
+    public function getUserMovies(): Collection
+    {
+        return $this->userMovies;
+    }
+
+    public function addUserMovie(UserMovie $userMovie): static
+    {
+        if (!$this->userMovies->contains($userMovie)) {
+            $this->userMovies->add($userMovie);
+            $userMovie->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserMovie(UserMovie $userMovie): static
+    {
+        if ($this->userMovies->removeElement($userMovie)) {
+            // set the owning side to null (unless already changed)
+            if ($userMovie->getUser() === $this) {
+                $userMovie->setUser(null);
+            }
+        }
 
         return $this;
     }

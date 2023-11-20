@@ -58,6 +58,7 @@ class CallApiService
         return $response->toArray();
     }
 
+    //Récupération des détails d'un film via l'Id the movie DB
     public function getMovieDetail(int $id)
     {
         $response = $this->client->request(
