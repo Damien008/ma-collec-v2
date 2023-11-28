@@ -1,18 +1,25 @@
 @import "~bootstrap/scss/bootstrap";
 
 body {
-    background-color: lightgrey;
+    background-color: lightgrey !important;
     font-family: 'Dosis', sans-serif;
     padding-bottom: 100px;
 }
 
-.title-app{
+.app_header{
     background-image: url("../../public/images/header.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    height: 120px;
-    color: white;
+    height: 100%;
+}
+
+.title-app{
     font-size: 60px;
+    color: white;
+}
+
+.app_navbar{
+    font-size: 20px;
 }
 
 .formWidth{

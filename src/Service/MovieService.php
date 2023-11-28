@@ -2,6 +2,7 @@
 namespace App\Service;
 
 use App\Entity\Movie;
+use App\Models\Search\MovieSearch;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -12,6 +13,9 @@ class MovieService extends BaseService
         parent::__construct($entityManagerInterface, Movie::class);
     }
 
+    public function getAll(MovieSearch $search){
+        return $this->entityRepository->getAll($search)->getResult();
+    }
 
     public function create($movie)
     {
