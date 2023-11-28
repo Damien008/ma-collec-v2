@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\ApiSearchType;
 use App\Models\Search\ApiSearch;
+use App\Models\Search\MovieSearch;
 use App\Service\Traits\AppServiceTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,6 +23,30 @@ class MovieController extends AbstractController
 {
     use AppServiceTrait;
 
+    #[Route('/collection', name: 'collection')]
+    public function showCollection(): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $moviesSearch = new MovieSearch();
+        $moviesSearch->setUser($user);
+        $movies = $this->getMovieService()->getAll($moviesSearch);
+
+        return $this->render('movie/collection.html.twig', [
+            'movies' => $movies,
+        ]);
+    }
+
+    #[Route('/show/{id}', name: 'show')]
+    public function show(int $id)
+    {
+        $movie = $this->getMovieService()->findById($id);
+
+        return $this->render('movie/show.html.twig', [
+            'movie' => $movie,
+        ]);
+    }
+
     /**
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
@@ -31,6 +57,7 @@ class MovieController extends AbstractController
     #[Route('/search', name: 'search')]
     public function search(Request $request): Response
     {
+
         $moviesData = null;
         $search = new ApiSearch();
         $searchForm = $this->createForm(ApiSearchType::class, $search);

@@ -53,3 +53,25 @@ $('.addMovie').on('click', function () {
     })
 })
 
+//affichage du détails d'une carte de film dans la collection
+$('.movie-card').on('click', function(){
+    let box = $('.box');
+    box.removeClass('d-none').addClass('zoom-in');
+    $('.img-box-front').attr('src', 'https://image.tmdb.org/t/p/w500' + $(this).data('posterpath'))
+    $('.movie-title').text($(this).data('title'));
+    $('.movie-originalTitle').text($(this).data('originaltitle'));
+    $('.movie-runtime').text($(this).data('runtime') + ' min');
+    $('.movie-overview').text($(this).data('overview'));
+    $('.movie-detail').attr('href', '/movie/show/' + $(this).data('id') );
+
+    $('.cross-icon').on('click', function () {
+        box.removeClass('zoom-in').addClass('d-none');
+    })
+    $('.arrow-icon').on('click', function () {
+        $('.box-inner').css('transform', 'rotateY(180deg)');
+    })
+    $('.arrow-iconBack').on('click', function () {
+        $('.box-inner').css('transform', 'rotateY(0)');
+    })
+})
+

@@ -22,7 +22,7 @@ abstract class BaseService
      * @param string|null            $entityClassName
      * @param EntityManagerInterface $entityManagerInterface
      */
-    public function __construct(private EntityManagerInterface $entityManagerInterface, string $entityClassName)
+    public function __construct(private readonly EntityManagerInterface $entityManagerInterface, string $entityClassName)
     {
         $this->entityRepository       = $entityManagerInterface->getRepository($entityClassName);
     }

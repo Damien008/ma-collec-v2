@@ -34,8 +34,8 @@ class Movie
     #[ORM\Column(nullable: true)]
     private ?int $budget = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $revenue = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $revenue = null;
 
     #[ORM\Column(length: 55, nullable: true)]
     private ?string $originalLanguage = null;
@@ -131,12 +131,12 @@ class Movie
         return $this;
     }
 
-    public function getRevenue(): ?int
+    public function getRevenue(): ?string
     {
         return $this->revenue;
     }
 
-    public function setRevenue(?int $revenue): static
+    public function setRevenue(?string $revenue): static
     {
         $this->revenue = $revenue;
 
