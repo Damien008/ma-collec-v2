@@ -3,6 +3,7 @@ namespace App\Service\Traits;
 
 use App\Service\CallApiService;
 use App\Service\MovieService;
+use App\Service\SupportService;
 use App\Service\UserMovieService;
 use App\Service\UserService;
 
@@ -16,6 +17,8 @@ trait AppServiceTrait
     private MovieService $movieService;
 
     private UserMovieService $userMovieService;
+
+    private SupportService $supportService;
 
     public function getUserService(): UserService
     {
@@ -60,4 +63,17 @@ trait AppServiceTrait
     {
         $this->userMovieService = $userMovieService;
     }
+
+    public function getSupportService(): SupportService
+    {
+        return $this->supportService;
+    }
+
+    #[\Symfony\Contracts\Service\Attribute\Required]
+    public function setSupportService(SupportService $supportService): void
+    {
+        $this->supportService = $supportService;
+    }
+
+
 }

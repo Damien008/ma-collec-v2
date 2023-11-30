@@ -38,17 +38,35 @@ $('.nbPage').on('click', function () {
     })
 });
 
+//ajout du support pour uin film
+
+$('.addSupport').on('click', function () {
+    let id = $(this).data('id');
+    $.ajax({
+        url: '/movie/ajout-support',
+        type: 'GET',
+        success: function (data) {
+            $('#supportModal').modal('show');
+            $('#modal-form').html(data);
+            $('#support_idMovie').val(id);
+        }
+    })
+})
+
 //ajout d'un film à la collection d'un utilisateur
-$('.addMovie').on('click', function () {
+$('#addMovie').on('click', function () {
     $.ajax({
         url: '/movie/ajout-film',
-        type: 'GET',
-        data: {
-            id: $(this).data('id'),
+        type: 'POST',
+        data:  $('#modal-form form').serialize(),
+        error: function(){
+            console.error(xhr.responseText); // Affichage des détails de l'erreur dans la console
+            alert('Une erreur est survenue. Veuillez vérifier la console pour plus de détails.');
         },
         success: function (data) {
-            $('.modal').modal('show');
-            $('.modal-body').html(data);
+                $('#supportModal').modal('toggle');
+                $('#successModal .modal-body').html(data.message);
+                $('#successModal').modal('toggle');
         }
     })
 })

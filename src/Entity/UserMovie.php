@@ -25,6 +25,10 @@ class UserMovie
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $addDate = null;
 
+    #[ORM\ManyToOne(inversedBy: 'userMovies')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Support $support = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +66,18 @@ class UserMovie
     public function setAddDate(\DateTimeInterface $addDate): static
     {
         $this->addDate = $addDate;
+
+        return $this;
+    }
+
+    public function getSupport(): ?Support
+    {
+        return $this->support;
+    }
+
+    public function setSupport(?Support $support): static
+    {
+        $this->support = $support;
 
         return $this;
     }
