@@ -19,10 +19,15 @@
                     <p>({{ movie.originalTitle }})</p>
                     <p>Durée : {{ movie.runtime }} min</p>
                     <p>Date de sortie : {{ movie.releaseDate|date }}</p>
+                    <p>Ajout à ma collection le : {{ userMovie.addDate|date }}</p>
+                    <p>Support : {{ userMovie.support.name }}</p>
                     <p>Budget : {{ movie.budget|price }}{{ money(movie.originalLanguage) }}</p>
                     <p>Recettes : {{ movie.revenue|price }}{{ money(movie.originalLanguage) }}</p>
                     <p>Langue original : {{ movie.originalLanguage }}</p>
                     <p>Résumé : <br/> <span class="text-justify">{{ movie.overview }}</span></p>
+                    <a href="{{ path('movie_delete_user_movie', { 'id': movie.id }) }}">
+                        <button class="btn btn-danger">Supprimer de ma collection</button>
+                    </a>
                 </div>
             </div>
         </div>
