@@ -18,9 +18,10 @@
                     <h2>{{ movie.title }}</h2>
                     <p>({{ movie.originalTitle }})</p>
                     <p>Durée : {{ movie.runtime }} min</p>
-                    <p>Date de sortie : {{ movie.releaseDate|date }}</p>
-                    <p>Ajout à ma collection le : {{ userMovie.addDate|date }}</p>
+                    <p>Date de sortie : {{ date(movie.releaseDate) }}</p>
+                    <p>Ajout à ma collection le : {{ date(userMovie.addDate) }}</p>
                     <p>Support : {{ userMovie.support.name }}</p>
+                    <p>Genres : {% for genre in movie.genres %} {{ genre.name }} {% if not loop.last %} / {% endif%} {% endfor %}</p>
                     <p>Budget : {{ movie.budget|price }}{{ money(movie.originalLanguage) }}</p>
                     <p>Recettes : {{ movie.revenue|price }}{{ money(movie.originalLanguage) }}</p>
                     <p>Langue original : {{ movie.originalLanguage }}</p>

@@ -15,7 +15,6 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFilter('price', [$this, 'formatPrice']),
-            new TwigFilter('date', [$this, 'formatDate']),
         ];
     }
 
@@ -26,6 +25,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('money', [$this, 'formatMoney']),
+            new TwigFunction('date', [$this, 'formatDate']),
         ];
     }
 
@@ -44,7 +44,7 @@ class AppExtension extends AbstractExtension
         return number_format($price, 0, ' ', ' ');
     }
 
-    public function formatDate(\DateTime $date): string
+    public function formatDate($date): string
     {
         return $date->format('d-m-Y');
     }

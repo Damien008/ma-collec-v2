@@ -69,4 +69,13 @@ class CallApiService
         return $response->toArray();
     }
 
+    public function getMovieGenre()
+    {
+        $response = $this->client->request(
+            'GET',
+            'https://api.themoviedb.org/3/genre/movie/list' . '?api_key=' . $this->parameterBag->get('APP_SECRET') . '&language=fr-FR'
+        );
+
+        return $response->toArray();
+    }
 }

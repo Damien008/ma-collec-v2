@@ -2,6 +2,7 @@
 namespace App\Service\Traits;
 
 use App\Service\CallApiService;
+use App\Service\GenreService;
 use App\Service\MovieService;
 use App\Service\SupportService;
 use App\Service\UserMovieService;
@@ -19,6 +20,8 @@ trait AppServiceTrait
     private UserMovieService $userMovieService;
 
     private SupportService $supportService;
+
+    private GenreService $genreService;
 
     public function getUserService(): UserService
     {
@@ -73,6 +76,17 @@ trait AppServiceTrait
     public function setSupportService(SupportService $supportService): void
     {
         $this->supportService = $supportService;
+    }
+
+    public function getGenreService(): GenreService
+    {
+        return $this->genreService;
+    }
+
+    #[\Symfony\Contracts\Service\Attribute\Required]
+    public function setGenreService(GenreService $genreService): void
+    {
+        $this->genreService = $genreService;
     }
 
 

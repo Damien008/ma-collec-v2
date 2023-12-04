@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Genre;
 use App\Entity\User;
 use App\Form\ApiSearchType;
 use App\Form\SupportType;
@@ -69,7 +70,6 @@ class MovieController extends AbstractController
     #[Route('/search', name: 'search')]
     public function search(Request $request): Response
     {
-
         $moviesData = null;
         $search = new ApiSearch();
         $searchForm = $this->createForm(ApiSearchType::class, $search);
@@ -140,8 +140,21 @@ class MovieController extends AbstractController
                 $message = $this->getUserMovieService()->create($user, $movie, $support);
                 //si le film n'est pas dans la base de données on l'ajoute, puis on l'ajoute à l'utilisateur
             }else{
+                //récupération du film via l'Api
                 $newMovie = $this->getCallApiService()->getMovieDetail($idMovieDB);
-                $newMovie = $this->getMovieService()->create($newMovie);
+                //récupération des genres du film
+                $genres = $newMovie['genres'];
+                $genreEntities = [];
+                foreach($genres as $genre){
+                    /** @var Genre $genreEntity */
+                    $entity = $this->getGenreService()->findOneBy(['idMovieDb' => $genre['id']]);
+                    if($entity) {
+                        $genreEntities[] = $entity;
+                    }
+                }
+                $jsonRet['genres'] = $genres;
+                //création du film en BDD
+                $newMovie = $this->getMovieService()->create($newMovie, $genreEntities);
                 $message = $this->getUserMovieService()->create($user, $newMovie, $support);
             }
             $jsonRet['message'] = $message;
