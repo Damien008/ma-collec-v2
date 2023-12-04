@@ -17,7 +17,7 @@ class MovieService extends BaseService
         return $this->entityRepository->getAll($search)->getResult();
     }
 
-    public function create($movie)
+    public function create($movie, $genres)
     {
         $new = new Movie();
         $new->setIdMovieDB($movie['id'])
@@ -30,6 +30,10 @@ class MovieService extends BaseService
             ->setOriginalLanguage($movie['original_language'])
             ->setOverview($movie['overview'])
             ->setPosterPath($movie['poster_path']);
+
+        foreach($genres as $genre){
+            $new->addGenre($genre);
+        }
 
         return parent::add($new);
 
