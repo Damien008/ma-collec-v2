@@ -93,3 +93,8 @@ $('.movie-card').on('click', function(){
     })
 })
 
+$("#showFormButton").click(function () {
+    // Utilisez slideUp avec une durée pour ajouter un effet
+    $(".movie-search-form").slideToggle("slow");
+});
+

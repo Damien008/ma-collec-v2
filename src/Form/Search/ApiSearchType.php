@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Search;
 
 use App\Models\Search\ApiSearch;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;

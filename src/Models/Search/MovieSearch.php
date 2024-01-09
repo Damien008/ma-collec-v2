@@ -1,13 +1,18 @@
 <?php
 namespace App\Models\Search;
 
+use App\Entity\Genre;
 use App\Entity\User;
 
 class MovieSearch
 {
-    private User $user;
+    private $user;
 
-    public function getUser(): User
+    private $title;
+
+    private $genre;
+
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -17,5 +22,27 @@ class MovieSearch
         $this->user = $user;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    public function getGenre(): ?Genre
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(Genre $genre): void
+    {
+        $this->genre = $genre;
+    }
 
 }

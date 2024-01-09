@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Genre;
 use App\Entity\User;
-use App\Form\ApiSearchType;
+use App\Form\Search\ApiSearchType;
+use App\Form\Search\MovieSearchType;
 use App\Form\SupportType;
 use App\Models\Search\ApiSearch;
 use App\Models\Search\MovieSearch;
@@ -30,16 +31,20 @@ class MovieController extends AbstractController
      * @return Response
      */
     #[Route('/collection', name: 'collection')]
-    public function showCollection(): Response
+    public function showCollection(Request $request): Response
     {
         /** @var User $user */
         $user = $this->getUser();
         $moviesSearch = new MovieSearch();
         $moviesSearch->setUser($user);
+        $moviesSearch->getTitle()('avatar');
+        $searchForm = $this->createForm(MovieSearchType::class, $moviesSearch);
+        $searchForm->handleRequest($request);
         $movies = $this->getMovieService()->getAll($moviesSearch);
 
         return $this->render('movie/collection.html.twig', [
-            'movies' => $movies,
+            'movies'        => $movies,
+            'search_form'   => $searchForm->createView(),
         ]);
     }
 
