@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Models\Search\MovieSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -41,11 +42,22 @@ class MovieRepository extends ServiceEntityRepository
     public function getAllQueryBuilder(MovieSearch $search): QueryBuilder
     {
         $qb = $this->createQueryBuilder('m');
-        $qb->innerJoin('m.userMovies', 'um');
 
         if(null !== $search->getUser()){
+            $qb->innerJoin('m.userMovies', 'um');
             $qb->andWhere('um.user = :user')
                 ->setParameter('user', $search->getUser());
+        }
+
+        if(null !== $search->getTitle()){
+            $qb->andWhere('m.title LIKE :title')
+                ->setParameter('title', '%' . $search->getTitle() . '%');
+        }
+
+        if(null !== $search->getGenre()){
+            $qb->innerJoin('m.genres', 'mg');
+            $qb->andWhere('mg.id = :genreId')
+                ->setParameter('genreId', $search->getGenre()->getId());
         }
 
         $qb->orderBy('m.title');
