@@ -37,7 +37,7 @@ class MovieController extends AbstractController
         $user = $this->getUser();
         $moviesSearch = new MovieSearch();
         $moviesSearch->setUser($user);
-        $moviesSearch->getTitle()('avatar');
+        $moviesSearch->getTitle();
         $searchForm = $this->createForm(MovieSearchType::class, $moviesSearch);
         $searchForm->handleRequest($request);
         $movies = $this->getMovieService()->getAll($moviesSearch);
